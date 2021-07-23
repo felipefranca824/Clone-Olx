@@ -1,3 +1,4 @@
+import 'package:clone_olx/screens/base/base_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:parse_server_sdk/parse_server_sdk.dart';
 
@@ -21,15 +22,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Olx Clone',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Center(
-        child: Container(
-          color: Colors.amber,
-        ),
-      ),
+      home: BaseScreen(),
     );
   }
 }
