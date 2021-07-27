@@ -29,9 +29,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Olx Clone',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
+        scaffoldBackgroundColor: Colors.purple,
+        appBarTheme: AppBarTheme(elevation: 0)
       ),
       home: BaseScreen(),
     );
