@@ -150,6 +150,21 @@ mixin _$SignUpStore on _SignUpStoreBase, Store {
     });
   }
 
+  final _$errorAtom = Atom(name: '_SignUpStoreBase.error');
+
+  @override
+  String get error {
+    _$errorAtom.reportRead();
+    return super.error;
+  }
+
+  @override
+  set error(String value) {
+    _$errorAtom.reportWrite(value, super.error, () {
+      super.error = value;
+    });
+  }
+
   final _$_SignUpStoreBaseActionController =
       ActionController(name: '_SignUpStoreBase');
 
@@ -228,6 +243,7 @@ phone: ${phone},
 password: ${password},
 confirmedPassword: ${confirmedPassword},
 loading: ${loading},
+error: ${error},
 nameValid: ${nameValid},
 emailValid: ${emailValid},
 phoneValid: ${phoneValid},

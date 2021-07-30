@@ -1,3 +1,5 @@
+import 'package:clone_olx/models/user.dart';
+import 'package:clone_olx/repository/user_repository.dart';
 import 'package:mobx/mobx.dart';
 import 'package:clone_olx/helpers/extensions.dart';
 part 'signup_store.g.dart';
@@ -24,6 +26,9 @@ abstract class _SignUpStoreBase with Store {
 
   @observable
   bool loading = false;
+
+  @observable
+  String error = '';
 
   @action
   void setName(String value) => name = value;
@@ -106,10 +111,22 @@ abstract class _SignUpStoreBase with Store {
   get signUpPressed => (isFormValid && !loading) ? _signUp : null;
 
   Future<void> _signUp() async {
-    print(isFormValid);
     setLoading(true);
-    await Future.delayed(Duration(seconds: 3));
-    setLoading(false);    
+
+    final user = User(
+      name: name,
+      email: email,
+      phone: phone,
+      password: password,
+    );
+  try{
+    final resultUser = await UserRespository().signup(user);
+    print(resultUser);
+     
+  }catch(e){
+    error = e.toString();
+  }
+      setLoading(false); 
   }
 
 }

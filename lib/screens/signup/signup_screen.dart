@@ -1,4 +1,5 @@
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:clone_olx/components/box_error.dart';
 import 'package:clone_olx/screens/signup/components/field_title.dart';
 import 'package:clone_olx/stores/signup_store.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,11 @@ class SignUpScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    Observer(builder: (_) {
+                      return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: BoxError(message: signUpStore.error));
+                    }),
                     FieldTitle(
                         title: 'Apelido',
                         subtitle: 'Como aparecerá nos seus anúncios.'),
@@ -124,14 +130,16 @@ class SignUpScreen extends StatelessWidget {
                           onPressed: signUpStore.signUpPressed,
                           child: (signUpStore.loading)
                               ? CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation(Colors.white),
-                              )
+                                  valueColor:
+                                      AlwaysStoppedAnimation(Colors.white),
+                                )
                               : Text(
                                   'CADASTRAR',
                                   style: TextStyle(color: Colors.white),
                                 ),
                           style: ButtonStyle(
-                              backgroundColor: signUpStore.isFormValid && !signUpStore.loading
+                              backgroundColor: signUpStore.isFormValid &&
+                                      !signUpStore.loading
                                   ? MaterialStateProperty.all<Color>(
                                       Colors.orange)
                                   : MaterialStateProperty.all<Color>(
