@@ -1,9 +1,12 @@
 import 'package:clone_olx/screens/signup/signup_screen.dart';
+import 'package:clone_olx/stores/login/login_store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({Key? key}) : super(key: key);
 
+  final LoginStore loginStore = LoginStore();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,8 +21,8 @@ class LoginScreen extends StatelessWidget {
             padding: const EdgeInsets.only(bottom: 16),
             child: Card(
               margin: const EdgeInsets.symmetric(horizontal: 32),
-              shape:
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
               elevation: 8,
               child: Padding(
                 padding: const EdgeInsets.all(16),
@@ -33,7 +36,8 @@ class LoginScreen extends StatelessWidget {
                       style: TextStyle(fontSize: 16, color: Colors.grey[900]),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 3, bottom: 4, top: 8),
+                      padding:
+                          const EdgeInsets.only(left: 3, bottom: 4, top: 8),
                       child: Text(
                         'Email',
                         style: TextStyle(
@@ -42,13 +46,17 @@ class LoginScreen extends StatelessWidget {
                             fontSize: 16),
                       ),
                     ),
-                    TextField(
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        isDense: true,
-                      ),
-                      keyboardType: TextInputType.emailAddress,
-                    ),
+                    Observer(builder: (_) {
+                      return TextField(
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          isDense: true,
+                          errorText: loginStore.emailError,
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        onChanged: loginStore.setEmail,
+                      );
+                    }),
                     const SizedBox(
                       height: 16,
                     ),
@@ -76,25 +84,43 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    TextField(
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        isDense: true,
-                      ),
-                      obscureText: true,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 20, bottom: 12),
-                      height: 40,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: Text('ENTRAR'),
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.orange,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20))),
-                      ),
-                    ),
+                    Observer(builder: (_) {
+                      return TextField(
+                        decoration: InputDecoration(
+                            border: const OutlineInputBorder(),
+                            isDense: true,
+                            errorText: loginStore.passwordError),
+                        obscureText: true,
+                        onChanged: loginStore.setPassword,
+                      );
+                    }),
+                    Observer(builder: (_) {
+                      return Container(
+                        margin: const EdgeInsets.only(top: 20, bottom: 12),
+                        height: 40,
+                        child: ElevatedButton(
+                          onPressed: loginStore.loginPressed,
+                          child: loginStore.loading
+                              ? CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : Text('ENTRAR'),
+                          style: ButtonStyle(
+                              backgroundColor: loginStore.emailValid &&
+                                      loginStore.passwordValid &&
+                                      !loginStore.loading
+                                  ? MaterialStateProperty.all<Color>(
+                                      Colors.orange)
+                                  : MaterialStateProperty.all<Color>(
+                                      Colors.orange.withAlpha(120)),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(20)))),
+                        ),
+                      );
+                    }),
                     Divider(
                       color: Colors.black,
                     ),
