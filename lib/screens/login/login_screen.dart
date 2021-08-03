@@ -1,3 +1,4 @@
+import 'package:clone_olx/components/box_error.dart';
 import 'package:clone_olx/screens/signup/signup_screen.dart';
 import 'package:clone_olx/stores/login/login_store.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +36,14 @@ class LoginScreen extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 16, color: Colors.grey[900]),
                     ),
+                    Observer(builder: (_){
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: BoxError(
+                          message: loginStore.error
+                        ),
+                      );
+                    }),
                     Padding(
                       padding:
                           const EdgeInsets.only(left: 3, bottom: 4, top: 8),

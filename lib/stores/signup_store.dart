@@ -1,5 +1,7 @@
 import 'package:clone_olx/models/user.dart';
 import 'package:clone_olx/repository/user_repository.dart';
+import 'package:clone_olx/stores/user_manager_store.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:clone_olx/helpers/extensions.dart';
 part 'signup_store.g.dart';
@@ -10,13 +12,13 @@ class SignUpStore = _SignUpStoreBase with _$SignUpStore;
 abstract class _SignUpStoreBase with Store {
   
   @observable
-  String ?name;
+  String name = '';
 
   @observable
-  String ?email;
+  String email = '';
 
   @observable
-  String ?phone;
+  String phone = '';
 
   @observable
   String ?password;
@@ -49,11 +51,11 @@ abstract class _SignUpStoreBase with Store {
   void setLoading(bool value) => loading = value;
 
   @computed
-  bool get nameValid => this.name != null && this.name!.length > 6;
+  bool get nameValid => this.name != null && this.name.length > 6;
   get nameError{
     if(this.name == null || nameValid)
       return null;
-    else if(this.name!.isEmpty)
+    else if(this.name.isEmpty)
       return 'Campo Obrigatótio';
     else
       return 'Nome muito curto';
@@ -61,22 +63,22 @@ abstract class _SignUpStoreBase with Store {
   }
 
   @computed
-  bool get emailValid => email != null && this.email!.isEmailValid();
+  bool get emailValid => email != null && this.email.isEmailValid();
   get emailError {
     if(email == null || emailValid)
       return null;
-    else if(email!.isEmpty)
+    else if(email.isEmpty)
       return 'Campo Obrigatório';
     else
       return 'Email Inválido';
   }
 
   @computed
-  bool get phoneValid => phone != null && this.phone!.length >= 14;
+  bool get phoneValid => phone != null && this.phone.length >= 14;
   get phoneError {
     if(phone == null || phoneValid)
       return null;
-    else if(phone!.isEmpty)
+    else if(phone.isEmpty)
       return 'Campo Obrigatório';
     else
       return 'Telefone Inválido';
@@ -121,6 +123,7 @@ abstract class _SignUpStoreBase with Store {
     );
   try{
     final resultUser = await UserRespository().signup(user);
+    GetIt.I<UserManagerStore>().setUser(resultUser);
     print(resultUser);
      
   }catch(e){

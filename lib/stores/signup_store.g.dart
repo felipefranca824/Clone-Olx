@@ -62,13 +62,13 @@ mixin _$SignUpStore on _SignUpStoreBase, Store {
   final _$nameAtom = Atom(name: '_SignUpStoreBase.name');
 
   @override
-  String? get name {
+  String get name {
     _$nameAtom.reportRead();
     return super.name;
   }
 
   @override
-  set name(String? value) {
+  set name(String value) {
     _$nameAtom.reportWrite(value, super.name, () {
       super.name = value;
     });
@@ -77,13 +77,13 @@ mixin _$SignUpStore on _SignUpStoreBase, Store {
   final _$emailAtom = Atom(name: '_SignUpStoreBase.email');
 
   @override
-  String? get email {
+  String get email {
     _$emailAtom.reportRead();
     return super.email;
   }
 
   @override
-  set email(String? value) {
+  set email(String value) {
     _$emailAtom.reportWrite(value, super.email, () {
       super.email = value;
     });
@@ -92,13 +92,13 @@ mixin _$SignUpStore on _SignUpStoreBase, Store {
   final _$phoneAtom = Atom(name: '_SignUpStoreBase.phone');
 
   @override
-  String? get phone {
+  String get phone {
     _$phoneAtom.reportRead();
     return super.phone;
   }
 
   @override
-  set phone(String? value) {
+  set phone(String value) {
     _$phoneAtom.reportWrite(value, super.phone, () {
       super.phone = value;
     });

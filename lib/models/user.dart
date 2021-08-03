@@ -11,9 +11,9 @@ class User {
       this.createdAt});
 
   String? id;
-  String? name;
-  String? email;
-  String? phone;
+  String name;
+  String email;
+  String phone;
   String? password;
   UserType type;
   DateTime? createdAt;

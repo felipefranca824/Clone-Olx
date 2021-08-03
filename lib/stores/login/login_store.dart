@@ -1,3 +1,6 @@
+import 'package:clone_olx/repository/user_repository.dart';
+import 'package:clone_olx/stores/user_manager_store.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mobx/mobx.dart';
 import 'package:clone_olx/helpers/extensions.dart';
 part 'login_store.g.dart';
@@ -14,6 +17,9 @@ abstract class _LoginStoreBase with Store {
 
   @observable
   bool loading = false;
+
+  @observable
+  String error = '';
 
   @action
   void setEmail(String value) => email = value;
@@ -46,8 +52,14 @@ abstract class _LoginStoreBase with Store {
   @action
   Future<void> _login() async {
     loading = true;
-
-    await Future.delayed(Duration(seconds: 3));
+    try {
+      final user = await UserRespository().loginWithEmail(email, password);
+      GetIt.I<UserManagerStore>().setUser(user);
+    } catch (e) {
+      error = e.toString();
+      print('Meu erro: ' + error);
+    }
+    
 
     loading = false;
   }

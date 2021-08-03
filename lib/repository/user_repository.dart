@@ -34,4 +34,18 @@ class UserRespository{
       createdAt: parseUser.get(keyUserCreatedAt),
     );
   }
+
+  Future<User> loginWithEmail(String? email, String? password) async {
+    final ParseUser parseUser = ParseUser(email, password, null);
+
+    final response = await parseUser.login();
+
+    if(response.success){
+      return mapParseToUser(response.result);
+    }else{
+      print(response.error!.code);
+      String error = ParseErrors.getDescription(response.error!.code)!;
+      return Future.error(error);
+    }
+  }
 }
