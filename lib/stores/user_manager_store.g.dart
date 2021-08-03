@@ -36,7 +36,7 @@ mixin _$UserManagerStore on _UserManagerStoreBase, Store {
       ActionController(name: '_UserManagerStoreBase');
 
   @override
-  void setUser(User value) {
+  void setUser(User? value) {
     final _$actionInfo = _$_UserManagerStoreBaseActionController.startAction(
         name: '_UserManagerStoreBase.setUser');
     try {

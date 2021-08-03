@@ -1,14 +1,11 @@
 import 'package:clone_olx/models/user.dart';
 import 'package:clone_olx/repository/parse_errors.dart';
 import 'package:clone_olx/repository/table_key.dart';
-import 'package:parse_server_sdk/parse_server_sdk.dart';
+import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
-class UserRespository{
-
+class UserRespository {
   Future<User> signup(User user) async {
-    final parseUser = ParseUser(
-      user.email, user.password, user.email
-    );
+    final parseUser = ParseUser(user.email, user.password, user.email);
 
     parseUser.set<String?>(keyUserName, user.name);
     parseUser.set<String?>(keyUserPhone, user.phone);
@@ -16,7 +13,7 @@ class UserRespository{
 
     final response = await parseUser.signUp();
 
-    if(response.success){
+    if (response.success) {
       return mapParseToUser(response.result);
     } else {
       String error = ParseErrors.getDescription(response.error!.code)!;
@@ -24,7 +21,7 @@ class UserRespository{
     }
   }
 
-  User mapParseToUser(ParseUser parseUser){
+  User mapParseToUser(ParseUser parseUser) {
     return User(
       name: parseUser.get(keyUserName),
       email: parseUser.get(keyUserEmail),
@@ -40,12 +37,27 @@ class UserRespository{
 
     final response = await parseUser.login();
 
-    if(response.success){
+    if (response.success) {
       return mapParseToUser(response.result);
-    }else{
+    } else {
       print(response.error!.code);
       String error = ParseErrors.getDescription(response.error!.code)!;
       return Future.error(error);
+    }
+  }
+
+  currrentUser() async {
+    final parseUser = await ParseUser.currentUser();
+    if (parseUser != null) {
+      final response = await ParseUser.getCurrentUserFromServer(
+          parseUser.sessionToken.toString());
+      if(response!.success){
+        return mapParseToUser(response.result);
+      } else{
+        await parseUser.logout();
+      }
+    } else {
+      return null;
     }
   }
 }
