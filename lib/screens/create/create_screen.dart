@@ -4,6 +4,7 @@ import 'package:clone_olx/stores/create/create_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'components/category_field.dart';
 import 'components/images_field.dart';
 
 class CreateSreen extends StatelessWidget {
@@ -47,6 +48,7 @@ class CreateSreen extends StatelessWidget {
                 contentPadding: contentPadding,
               ),
             ),
+            CategoryField(createStore),
             TextFormField(
               decoration: InputDecoration(
                 labelText: 'Preço *',
