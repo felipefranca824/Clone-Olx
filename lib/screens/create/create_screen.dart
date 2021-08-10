@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'components/category_field.dart';
+import 'components/cep_field.dart';
 import 'components/images_field.dart';
 
 class CreateSreen extends StatelessWidget {
@@ -49,6 +50,7 @@ class CreateSreen extends StatelessWidget {
               ),
             ),
             CategoryField(createStore),
+            CepField(),
             TextFormField(
               decoration: InputDecoration(
                 labelText: 'Preço *',

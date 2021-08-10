@@ -1,4 +1,6 @@
 import 'package:clone_olx/repository/category_repository.dart';
+import 'package:clone_olx/repository/cep_repository.dart';
+import 'package:clone_olx/repository/ibge_repository.dart';
 import 'package:clone_olx/screens/base/base_screen.dart';
 import 'package:clone_olx/stores/category/category_store.dart';
 import 'package:clone_olx/stores/page_store.dart';
