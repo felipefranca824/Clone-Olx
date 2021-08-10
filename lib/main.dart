@@ -42,7 +42,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
         scaffoldBackgroundColor: Colors.purple,
-        appBarTheme: AppBarTheme(elevation: 0)
+        appBarTheme: AppBarTheme(elevation: 0),
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       home: BaseScreen(),
     );

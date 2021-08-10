@@ -11,6 +11,50 @@ abstract class _CreateStoreBase with Store {
   @observable
   Category? category;
 
+  @observable
+  String title = '';
+
+  @observable
+  String description = '';
+
+  @observable
+  bool? hidePhone = false;
+
+  @action
+  void setHidePhone(bool? value) => hidePhone = value;
+
   @action
   setCategory(Category? value) => category = value;
+
+  @action
+  void setTitle(String value) => title = value;
+
+  @action
+  void setDecription(String value) => description = value;
+
+  @computed
+  bool get imagesValid => images.isNotEmpty;
+  String? get imagesError{
+    if(imagesValid) return null;
+    else return 'Insira imagens';
+  }
+
+
+  @computed
+  bool get titleValid => title.length >= 6;
+  String? get titleError{
+    if(titleValid) return null;
+    else if(title.isEmpty) return 'Campo Obrigatório';
+    else return 'Título muito curto';
+  }
+
+  @computed
+  bool get descriptionValid => description.length >= 10;
+  String? get descriptionError{
+    if(descriptionValid) return null;
+    else if(description.isEmpty) return 'Campo Obrigatório';
+    else return 'Descrição muito curta';
+  }
+
+
 }
